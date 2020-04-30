@@ -80,8 +80,9 @@ void test_3(){
     }
 }
 struct algo{
-    int F;
+    int F = 0;
     string palabra;
+
 
 };
 
@@ -110,40 +111,48 @@ void quick_sort(vector<algo> data, int start, int end){
 
 
 void unsortedness(algo &c) {
-    c.F = 0;
     for (int i = 0; i < c.palabra.size() - 1; ++i) {
         for (int j = i + 1; j < c.palabra.size(); ++j) {
-            if (c.palabra[i] > c.palabra[j])++c.F;
+            if (c.palabra[i] > c.palabra[j])
+                c.F++;
         }
     }
 }
 
-void bubbleSort(vector<algo>&data, int n)
-    {
-        int i, j;
-        for (i = 0; i < n-1; i++)
-            for (j = 0; j < n-i-1; j++)
-                if (data[j].F > data[j+1].F)
-                    swap(data[j], data[j+1]);
-    }
+void bubbleSort(vector<algo>&data, int n) {
+    for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (data[j].F > data[j + 1].F) {
+                    swap(data[j], data[j + 1]);
+                }
+            }
+        }
+    for (const auto &elemento: data)
+        cout << elemento.palabra << endl;
+
+}
 
 void test_4(){
     int cases;
     cin >> cases;
+    getchar();
     while(cases--) {
+        getchar();
         vector<algo>lista;
         int sizep, total;
-        cin >> sizep >> total;
-        algo p;
+        cin >> sizep;
+        cin >>total;
+        int TOTAL = total;
+
         while(total--){
+            algo p;
             cin >> p.palabra;
             unsortedness(p);
-            cout << p.palabra << ": " << p.F << endl;
             lista.push_back(p);
         }
-        bubbleSort(lista, total);
-        for(auto& elem:lista)
-            cout << elem.palabra << "-->" << elem.F << endl;
+        bubbleSort(lista, TOTAL);
+
     }
 
 }
