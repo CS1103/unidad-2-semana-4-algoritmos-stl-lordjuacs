@@ -89,7 +89,7 @@ int partition(vector<algo>data, int start, int end){
     auto pivot = data[end].F;
     auto pi = start;
     for(int j = start; j < end; j++){
-        if(data[j].F >= pivot){
+        if(data[j].F <= pivot){
             swap(data[pi], data[j]);
             pi++;
         }
@@ -109,33 +109,41 @@ void quick_sort(vector<algo> data, int start, int end){
 
 
 
-int unsortedness(algo c){
-    int con = 0;
-    for(int i = 0; i < c.palabra.size() - 1; ++i){
-        for(int j = i + 1; j < c.palabra.size();++i){
-            if(c.palabra[i] > c.palabra[j])++con;
+void unsortedness(algo &c) {
+    c.F = 0;
+    for (int i = 0; i < c.palabra.size() - 1; ++i) {
+        for (int j = i + 1; j < c.palabra.size(); ++j) {
+            if (c.palabra[i] > c.palabra[j])++c.F;
         }
     }
-    return con;
 }
+
+void bubbleSort(vector<algo>&data, int n)
+    {
+        int i, j;
+        for (i = 0; i < n-1; i++)
+            for (j = 0; j < n-i-1; j++)
+                if (data[j].F > data[j+1].F)
+                    swap(data[j], data[j+1]);
+    }
+
 void test_4(){
     int cases;
     cin >> cases;
-    getchar();
     while(cases--) {
-        getchar();
         vector<algo>lista;
         int sizep, total;
         cin >> sizep >> total;
         algo p;
         while(total--){
             cin >> p.palabra;
-            p.F = unsortedness(p);
+            unsortedness(p);
+            cout << p.palabra << ": " << p.F << endl;
             lista.push_back(p);
         }
-        quick_sort(lista, 0,sizep - 1);
+        bubbleSort(lista, total);
         for(auto& elem:lista)
-            cout << elem.palabra << endl;
+            cout << elem.palabra << "-->" << elem.F << endl;
     }
 
 }
